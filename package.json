@@ -1,0 +1,22 @@
+{
+  "name": "glbot",
+  "version": "0.0.1",
+  "description": "The Guild Lite (Discord Bot)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://dev.barrel.zone/source/glbot.git"
+  },
+  "keywords": [
+    "game"
+  ],
+  "author": "Barrel Zone",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.2.1"
+  }
+}
