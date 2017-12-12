@@ -33,7 +33,7 @@ async function getWebhook(guild, channel) {
 let avatar = "";
 
 client.on('ready', () => {
-    console.log('Connected to Discord API... :o');
+    console.log('Connected to Discord API... Meow!');
 });
 
 client.on('message', message => {
