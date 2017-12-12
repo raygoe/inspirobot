@@ -3,7 +3,7 @@ const http = require('http');
 
 let client = new Discord.Client();
 
-const token = 'INSERT_TOKEN_HERE';
+const token = require('./token.conf').token;
 
 let radish_msg = [{ "header": "You want to know about...", "message": "The first time not having the radish nearby? It was a painful experience." },
 { "header": "A radish is...", "message": "A type of nut. It is meat; it is a type of nut." },
