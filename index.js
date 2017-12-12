@@ -58,7 +58,7 @@ client.on('message', message => {
                 embed.setColor(0xFFCC00)
                      .setImage(data);
                 getWebhook(message.guild, message.channel)
-                    .then(webhook => webhook.edit("Almighty Inspirobot", "https://i.imgur.com/WAAdjoX.png"))
+                    .then(webhook => webhook.edit("Inspirobot", "https://i.imgur.com/WAAdjoX.png"))
                     .then(webhook => {webhook.sendMessage("", {"embeds": [embed]});
                                       webhook.edit(message.channel.name, "https://i.imgur.com/WAAdjoX.png");
                                      })
