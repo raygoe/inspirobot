@@ -42,8 +42,9 @@ client.on('ready', () => {
     console.log('Connected to Discord API... :o');
 
     // For the dictionary
-    let bookContent = fs.readFileSync('FiftyShadesOfGrey.txt','utf8')
-
+    //let bookContent = fs.readFileSync('FiftyShadesOfGrey.txt','utf8')
+    let bookContent = fs.readFileSync('AdultFanFictionDBZGundam.txt','utf8')
+    
     let lastWord = "The"
     let currentWord = ""
     
