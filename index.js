@@ -1,9 +1,14 @@
+// Global Libraries
 const Discord = require('discord.js');
 const http = require('http');
+const fs = require("fs")
 
-let client = new Discord.Client();
-
+// Local libraries
 const token = require('./token.conf').token;
+
+// Variables
+let client = new Discord.Client();
+let dictionary = new Map()
 
 let radish_msg = [{ "header": "You want to know about...", "message": "The first time not having the radish nearby? It was a painful experience." },
 { "header": "A radish is...", "message": "A type of nut. It is meat; it is a type of nut." },
@@ -32,12 +37,50 @@ async function getWebhook(guild, channel) {
 
 let avatar = "";
 
+// When the application starts
 client.on('ready', () => {
     console.log('Connected to Discord API... :o');
+
+    // For the dictionary
+    let bookContent = fs.readFileSync('FiftyShadesOfGrey.txt','utf8')
+
+    let lastWord = "The"
+    let currentWord = ""
+    
+    for (var i = 0, len = bookContent.length; i < len; i++) {
+    
+        // Current character
+        let char = bookContent.charAt(i)
+    
+        // Skip newlines
+        if(char == "\n" || char == "\r")
+            char = " ";
+    
+        // End of word
+        if(char == " ") {
+            if(currentWord.length > 0) {
+                if(!dictionary.has(lastWord)) {
+                    dictionary.set(lastWord, [])
+                }
+                
+                dictionary.set(lastWord, dictionary.get(lastWord).concat([currentWord]))
+                //console.log("Last Word: " + lastWord + " || Current Word: " + currentWord)
+                lastWord = currentWord
+                currentWord = ""
+            }
+        } else {
+            currentWord += char
+        }
+    }
+
+    console.log("dictionary loaded.")
 });
 
+// For each message
 client.on('message', message => {
     console.log(message.content);
+
+    // Advice Radish
     if (message.content.includes(":sorry_bone_bag:")) {
         let id = Math.floor(Math.random() * radish_msg.length);
         getWebhook(message.guild, message.channel)
@@ -48,6 +91,7 @@ client.on('message', message => {
             .catch(console.error);
     }
 
+    // Inspiration Generator
     if (message.content.includes(':idea:')) {
         var request = http.get("http://inspirobot.me/api?generate=true", (res) => {
             let data = "";
@@ -65,6 +109,48 @@ client.on('message', message => {
                     .catch(console.error);
             });
         });        
+    }
+
+    // Novel generator
+    if(message.content.includes(":irma:")) {
+        console.log("Generating Novel")
+        let chosenWord = "I"
+        let output = "";
+        
+        let maxWords = 100
+        let absoluteMaxWords = 150
+        
+        for(var i = 0; i < absoluteMaxWords; i++) {
+            if(!dictionary.has(chosenWord)) {
+                console.log(dictionary)
+                console.log(dictionary[chosenWord])
+                output += "...**"
+                break;
+            }
+        
+            var currentPosition = dictionary.get(chosenWord)
+            if(currentPosition.length == 0) {
+                output += "...***"
+                break;
+            }
+        
+            var randomItem = currentPosition[Math.floor(Math.random()*currentPosition.length)];
+            output += " " + chosenWord;
+        
+            if(i > maxWords) {
+                if(chosenWord.includes(".")) {
+                    break;
+                }
+            }
+        
+            chosenWord = randomItem;
+        }
+        getWebhook(message.guild, message.channel)
+            .then(webhook => webhook.edit(radish_msg[id].header, "https://i.imgur.com/BuLE1VA.png"))
+            .then(webhook => {webhook.sendMessage(output);
+                            webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
+                            })
+            .catch(console.error);
     }
 });
 
