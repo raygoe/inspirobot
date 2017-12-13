@@ -84,7 +84,7 @@ client.on('message', message => {
     if (message.content.includes(":sorry_bone_bag:")) {
         let id = Math.floor(Math.random() * radish_msg.length);
         getWebhook(message.guild, message.channel)
-            .then(webhook => webhook.edit(radish_msg[id].header, "https://i.imgur.com/BuLE1VA.png"))
+            .then(webhook => webhook.edit("Novel Generator", "https://i.imgur.com/BuLE1VA.png"))
             .then(webhook => {webhook.sendMessage(radish_msg[id].message);
                               webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
                              })
