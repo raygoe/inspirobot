@@ -118,8 +118,8 @@ client.on('message', message => {
         let chosenWord = "The"
         let output = "";
         
-        let maxWords = 40
-        let absoluteMaxWords = 80
+        let maxWords = 12
+        let absoluteMaxWords = 25
         
         for(var i = 0; i < absoluteMaxWords; i++) {
             if(!dictionary.has(chosenWord)) {
