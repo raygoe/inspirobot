@@ -4,6 +4,7 @@ const http = require('http');
 const fs = require("fs")
 
 // Local libraries
+const webhooks = require("./webhooks.js");
 const token = require('./token.conf').token;
 
 // Variables
@@ -23,17 +24,6 @@ let radish_msg = [{ "header": "You want to know about...", "message": "The first
 { "header": "A radish is a...", "message": "Type of jewel that tastes like a salad." },
 { "header": "A radish is a...", "message": "Tomato, and when you have none left you feel horrible. You feel like the devil lives in your laundry room." },
 { "header": "Sorry, Bone Bag...", "message": "I don't have any radishes :tired_face:" }];
-
-async function getWebhook(guild, channel) {
-    let hook_collection = await guild.fetchWebhooks();
-    let hook = hook_collection.find(h => h.name === channel.name);
-
-    if (hook !== null) {
-        return Promise.resolve(hook);
-    } else {
-        return channel.createWebhook(channel.name, "https://i.imgur.com/BuLE1VA.png");
-    }
-}
 
 let avatar = "";
 
@@ -84,7 +74,7 @@ client.on('message', message => {
     // Advice Radish
     if (message.content.includes(":sorry_bone_bag:")) {
         let id = Math.floor(Math.random() * radish_msg.length);
-        getWebhook(message.guild, message.channel)
+        webhooks.get(message.guild, message.channel)
             .then(webhook => webhook.edit(radish_msg[id].header, "https://i.imgur.com/BuLE1VA.png"))
             .then(webhook => {webhook.sendMessage(radish_msg[id].message);
                               webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
@@ -102,7 +92,7 @@ client.on('message', message => {
                 let embed = new Discord.RichEmbed();
                 embed.setColor(0xFFCC00)
                      .setImage(data);
-                getWebhook(message.guild, message.channel)
+                     webhooks.get(message.guild, message.channel)
                     .then(webhook => webhook.edit("Inspirobot", "https://i.imgur.com/WAAdjoX.png"))
                     .then(webhook => {webhook.sendMessage("", {"embeds": [embed]});
                                       webhook.edit(message.channel.name, "https://i.imgur.com/WAAdjoX.png");
@@ -155,7 +145,7 @@ client.on('message', message => {
         
             chosenWord = randomItem;
         }
-        getWebhook(message.guild, message.channel)
+        webhooks.get(message.guild, message.channel)
             .then(webhook => webhook.edit("Apocalypse Preacher Bot", "https://openclipart.org/image/2400px/svg_to_png/185844/energy.png"))
             .then(webhook => {webhook.sendMessage(output);
                             webhook.edit(message.channel.name, "https://openclipart.org/image/2400px/svg_to_png/185844/energy.png");
