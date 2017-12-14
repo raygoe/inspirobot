@@ -43,7 +43,7 @@ client.on('ready', () => {
 
     // For the dictionary
     //let bookContent = fs.readFileSync('FiftyShadesOfGrey.txt','utf8')
-    let bookContent = fs.readFileSync('AdultFanFictionDBZGundam.txt','utf8')
+    let bookContent = fs.readFileSync('KingJamesBible.txt','utf8')
     
     let lastWord = "The"
     let currentWord = ""
