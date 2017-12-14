@@ -8,10 +8,10 @@ var radishbot = require('../../bots/inspirobot.js');
       it('should succeed', function(){
 
         let bot = new inspirobot(webhooks);
-        let msg = function() {
-            this.guild = ""
-            this.channel = { name: "" }
-            this.content = ":idea:"
+        let msg = {
+            guild: "",
+            channel: { name: "" },
+            content: ":idea:"
         }
         assert.equal(bot.handleMessage(msg), true)
 

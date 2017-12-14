@@ -8,11 +8,12 @@ var apocalypsebot = require('../../bots/apocalypsebot.js');
       it('should succeed', function(){
 
         let bot = new apocalypsebot(webhooks);
-        let msg = function() {
-            this.guild = ""
-            this.channel = { name: "" }
-            this.content = ":idea:"
+        let msg = {
+            guild: "",
+            channel: { name: "" },
+            content: ":wrong:"
         }
+        
         assert.equal(bot.handleMessage(msg), true)
 
       });

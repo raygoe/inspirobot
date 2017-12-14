@@ -8,10 +8,10 @@ var radishbot = require('../../bots/radishbot.js');
       it('should succeed', function(){
 
         let bot = new radishbot(webhooks);
-        let msg = function() {
-            this.guild = ""
-            this.channel = { name: "" }
-            this.content = ":sorry_bone_bag:"
+        let msg = {
+            guild: "",
+            channel: { name: "" },
+            content: ":sorry_bone_bag:"
         }
         assert.equal(bot.handleMessage(msg), true)
 
