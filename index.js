@@ -118,7 +118,7 @@ client.on('message', message => {
         let chosenWord = "The"
         let output = "";
         
-        let maxWords = 12
+        let maxWords = 20
         let absoluteMaxWords = 50
         
         for(var i = 0; i < absoluteMaxWords; i++) {
@@ -136,14 +136,18 @@ client.on('message', message => {
             }
         
             var randomItem = currentPosition[Math.floor(Math.random()*currentPosition.length)];
-            output += " " + chosenWord;
-        
+
             if(i > maxWords) {
                 for(var j = 0; j < currentPosition.length; j++) {
                     if(currentPosition[j].includes(".")) {
                         chosenWord = currentPosition[j]
                     }
                 }
+            }
+
+            output += " " + chosenWord;
+        
+            if(i > maxWords) {
                 if(chosenWord.includes(".")) {
                     break;
                 }
