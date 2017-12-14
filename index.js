@@ -1,6 +1,5 @@
 // Global Libraries
 const Discord = require('discord.js');
-const http = require('http');
 const fs = require("fs")
 
 // Local libraries
@@ -53,29 +52,14 @@ client.on('ready', () => {
 
 // For each message
 client.on('message', message => {
+
+    // Show each message to console
     console.log(message.content);
 
     
 
     // Inspiration Generator
-    if (message.content.includes(':idea:')) {
-        var request = http.get("http://inspirobot.me/api?generate=true", (res) => {
-            let data = "";
-            res.on('data', (chunk) => { data += chunk });
-            res.on('end', () => {
-                let hook = null;
-                let embed = new Discord.RichEmbed();
-                embed.setColor(0xFFCC00)
-                     .setImage(data);
-                     webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit("Inspirobot", "https://i.imgur.com/WAAdjoX.png"))
-                    .then(webhook => {webhook.sendMessage("", {"embeds": [embed]});
-                                      webhook.edit(message.channel.name, "https://i.imgur.com/WAAdjoX.png");
-                                     })
-                    .catch(console.error);
-            });
-        });        
-    }
+    
 
     // Novel generator
     if(message.content.includes(":wrong:")) {

@@ -1,6 +1,4 @@
 // Bot gives good advice about radishes
-console.log("Radish Bot Phrases Loaded.")
-
 module.exports = class RadishBot {
 
     // We need an instance of webhooks here so we can mock it for tests
@@ -20,6 +18,8 @@ module.exports = class RadishBot {
         { "header": "A radish is a...", "message": "Type of jewel that tastes like a salad." },
         { "header": "A radish is a...", "message": "Tomato, and when you have none left you feel horrible. You feel like the devil lives in your laundry room." },
         { "header": "Sorry, Bone Bag...", "message": "I don't have any radishes :tired_face:" }];
+        
+        console.log("Radish Bot Phrases Loaded.")
         
     }
 
