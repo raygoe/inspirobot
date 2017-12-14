@@ -4,7 +4,7 @@ const http = require('http');
 const fs = require("fs")
 
 // Local libraries
-const webhooks = require("./webhooks.js");
+const webhooks = require("./webhooks/webhooks.js");
 const token = require('./token.conf').token;
 
 // Variables
