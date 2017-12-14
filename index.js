@@ -119,7 +119,7 @@ client.on('message', message => {
         let output = "";
         
         let maxWords = 12
-        let absoluteMaxWords = 40
+        let absoluteMaxWords = 50
         
         for(var i = 0; i < absoluteMaxWords; i++) {
             if(!dictionary.has(chosenWord)) {
@@ -139,6 +139,11 @@ client.on('message', message => {
             output += " " + chosenWord;
         
             if(i > maxWords) {
+                for(var j = 0; j < currentPosition.length; j++) {
+                    if(currentPosition[j].includes(".")) {
+                        chosenWord = currentPosition[j]
+                    }
+                }
                 if(chosenWord.includes(".")) {
                     break;
                 }
