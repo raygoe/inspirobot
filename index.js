@@ -43,7 +43,7 @@ client.on('ready', () => {
 
     // For the dictionary
     //let bookContent = fs.readFileSync('FiftyShadesOfGrey.txt','utf8')
-    let bookContent = fs.readFileSync('KingJamesBible.txt','utf8')
+    let bookContent = fs.readFileSync('Apocalypse.txt','utf8')
     
     let lastWord = "The"
     let currentWord = ""
@@ -113,7 +113,7 @@ client.on('message', message => {
     }
 
     // Novel generator
-    if(message.content.includes(":irma:")) {
+    if(message.content.includes(":wrong:")) {
         console.log("Generating Novel")
         let chosenWord = "The"
         let output = "";
@@ -156,9 +156,9 @@ client.on('message', message => {
             chosenWord = randomItem;
         }
         getWebhook(message.guild, message.channel)
-            .then(webhook => webhook.edit("Novel Generator", "https://i.imgur.com/BuLE1VA.png"))
+            .then(webhook => webhook.edit("Apocalypse Preacher Bot", "https://openclipart.org/image/2400px/svg_to_png/185844/energy.png"))
             .then(webhook => {webhook.sendMessage(output);
-                            webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
+                            webhook.edit(message.channel.name, "https://openclipart.org/image/2400px/svg_to_png/185844/energy.png");
                             })
             .catch(console.error);
     }
