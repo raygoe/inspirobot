@@ -115,7 +115,7 @@ client.on('message', message => {
     // Novel generator
     if(message.content.includes(":irma:")) {
         console.log("Generating Novel")
-        let chosenWord = "I"
+        let chosenWord = "The"
         let output = "";
         
         let maxWords = 40
