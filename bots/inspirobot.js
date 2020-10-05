@@ -1,6 +1,6 @@
 // Need the http library
 const Discord = require('discord.js');
-const http = require('http');
+const https = require('https');
 
 // Bot gives good advice about inspiration
 module.exports = class InspiroBot {
@@ -15,7 +15,7 @@ module.exports = class InspiroBot {
             if (message.content.includes(':idea:')) {
 
                 // Make a web request to InspiroBot
-                var request = http.get("http://inspirobot.me/api?generate=true", (res) => {
+                var request = https.get("https://inspirobot.me/api?generate=true", (res) => {
                     let data = "";
                     res.on('data', (chunk) => { data += chunk });
 
