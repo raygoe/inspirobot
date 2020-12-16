@@ -1,0 +1,8 @@
+2020-07-25:
+
+- converted gpt2convert.py to Python 3
+- added -f option to force the model filename
+
+2020-06-13:
+
+- initial release
