@@ -30,7 +30,7 @@ module.exports = class GPT2Bot {
                 env: process.env
             };
             let prompt = message.content.substr(6);
-            const gpt2tc = spawn(__dirname  + '/gpt2bot/gpt2tc', ['-T', '8', '-m', '345M', 'g', prompt], defaults);
+            const gpt2tc = spawn(__dirname  + '/gpt2bot/gpt2tc', ['-T', '8', '-m', '1558M', 'g', prompt], defaults);
             let outMsg = "";
             gpt2tc.stdout.on('data', (data) => { outMsg += data; });
             gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
@@ -85,7 +85,7 @@ Q: ${question}`;
                 cwd: __dirname  + '/gpt2bot',
                 env: process.env
             };
-            const gpt2tc = spawn(__dirname  + '/gpt2bot/gpt2tc', ['-T', '8', '-m', '345M', 'g', prompt], defaults);
+            const gpt2tc = spawn(__dirname  + '/gpt2bot/gpt2tc', ['-T', '8', '-m', '1558M', 'g', prompt], defaults);
             let outMsg = "";
             gpt2tc.stdout.on('data', (data) => { outMsg += data; });
             gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
