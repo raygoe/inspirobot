@@ -104,8 +104,63 @@ ${postPrompt}`);
                                     })
                     .catch(console.error);
             });
+
+            return true;
         }
 
+
+        // New Radish.
+        if (message.content.includes(":radish:")) {
+            let authorId = message.author.id;
+            let prompt = 
+`The first time not having the radish nearby? It was a painful experience.
+A type of nut. It is meat; it is a type of nut.
+The first day having none left. It was the worst day of my life.
+To yell at my radishes... They hadn't come to life and eaten me. Then I saw, I didn't have any radishes left! That is when I knew the universe was made out of chaos and bullshit.
+The radishes were gone... He immediately died.
+You see that your garage has no radishes in it... That's when you know the devil is the king of your city and lives to make life nasty for humanity.
+I've never had radishes. Wait, that's inacurrate. Delete this.
+A type of red ball and I do not have any anymore. "You are fired from my life. Do not come to work anymore and do not come to my house." - My Boss
+In my garage... "Never be part of my office any more, ever again." - My Boss
+I had no radishes... Jesus Christ, the Son of God, crawled out of my airduct to show off his new Nike sneakers. I was just so miserable, all I could do was stuff him back up my airduct.
+Type of jewel that tastes like a salad.
+Tomato, and when you have none left you feel horrible. You feel like the devil lives in your laundry room.
+I don't have any radishes 😫`;
+            message.delete();
+            if (this.generating) {
+                this.webhooks.get(message.guild, message.channel)
+                    .then(webhook => webhook.edit("A New Radish", "https://i.imgur.com/wcl2P5f.png"))
+                    .then(webhook => {webhook.sendMessage("**HEY! I'm generating here!**");
+                                    webhook.edit(message.channel.name, "https://i.imgur.com/wcl2P5f.png");
+                                    })
+                    .catch(console.error);
+                return;
+            }
+            this.generating = true;
+            const defaults = {
+                cwd: __dirname  + '/gpt2bot',
+                env: process.env
+            };
+            const gpt2tc = spawn(__dirname  + '/gpt2bot/gpt2tc', ['-T', '8', '-m', '1558M', 'g', prompt], defaults);
+            let outMsg = "";
+            gpt2tc.stdout.on('data', (data) => { outMsg += data; });
+            gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
+            gpt2tc.on('close', (code) => {
+                this.webhooks.get(message.guild, message.channel)
+                    .then(webhook => webhook.edit("A New Radish", "https://i.imgur.com/wcl2P5f.png"))
+                    .then(webhook => {
+                        let postPrompt = outMsg.substr(prompt.length + 1);
+                        postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
+                        console.log("\n" + outMsg + "\n");
+                        webhook.sendMessage($postPrompt);
+                                    webhook.edit(message.channel.name, "https://i.imgur.com/wcl2P5f.png");
+                                    this.generating = false;
+                                    })
+                    .catch(console.error);
+            });
+            
+            return true;
+        }
 
         // Return false if we did nothing
         return false;
