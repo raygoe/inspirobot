@@ -4,9 +4,22 @@ const { spawn } = require('child_process');
 module.exports = class GPT2Bot {
 
     // We need an instance of webhooks here so we can mock it for tests
-    constructor(webhooks) {
+    constructor(webhooks, client) {
         this.webhooks = webhooks;
-        this.generating = false;
+        this.generating = 0;
+        this.MaxGenerators = 2;
+        this.client = client;
+    }
+
+    setPresence(msg) {
+        this.client.user.setPresence({
+            game: {
+                name: msg,
+                url: 'https://github.com/raygoe/inspirobot',
+                type: "LISTENING"
+            },
+            status: 'online'
+        });
     }
 
     handleMessage(message) {
@@ -15,16 +28,17 @@ module.exports = class GPT2Bot {
         if (message.content.substr(0, 6) == "/gpt2 ") {
             let authorId = message.author.id;
             message.delete();
-            if (this.generating) {
+            if (this.generating >= this.MaxGenerators) {
                 this.webhooks.get(message.guild, message.channel)
                     .then(webhook => webhook.edit("RadishGod", "https://i.imgur.com/BuLE1VA.png"))
-                    .then(webhook => {webhook.sendMessage("**HEY! I'm generating here!**");
+                    .then(webhook => {webhook.sendMessage("**I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.**");
                                     webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
                                     })
                     .catch(console.error);
                 return;
             }
-            this.generating = true;
+            this.generating++;
+            setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
             const defaults = {
                 cwd: __dirname  + '/gpt2bot',
                 env: process.env
@@ -41,7 +55,12 @@ module.exports = class GPT2Bot {
 `<@!${authorId}>, here's your message:
 >>> **${prompt}**${outMsg.substr(prompt.length, outMsg.search("\ntime=") - prompt.length )}`);
                                     webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
-                                    this.generating = false;
+                                    this.generating--;
+                                    if (this.generating) {
+                                        setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+                                    } else {
+                                        setPresence('');
+                                    }
                                     })
                     .catch(console.error);
             });
@@ -71,16 +90,17 @@ A: Wear a mask and take the vaccine when it comes.
 
 Q: ${question}`;
             message.delete();
-            if (this.generating) {
+            if (this.generating >= this.MaxGenerators) {
                 this.webhooks.get(message.guild, message.channel)
                     .then(webhook => webhook.edit("Our AI Overlord", "https://i.imgur.com/wcl2P5f.png"))
-                    .then(webhook => {webhook.sendMessage("**HEY! I'm generating here!**");
+                    .then(webhook => {webhook.sendMessage("I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.");
                                     webhook.edit(message.channel.name, "https://i.imgur.com/wcl2P5f.png");
                                     })
                     .catch(console.error);
                 return;
             }
-            this.generating = true;
+            this.generating++;
+            setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
             const defaults = {
                 cwd: __dirname  + '/gpt2bot',
                 env: process.env
@@ -100,7 +120,12 @@ Q: ${question}`;
 `<@!${authorId}> asked: **${question}**
 ${postPrompt}`);
                                     webhook.edit(message.channel.name, "https://i.imgur.com/wcl2P5f.png");
-                                    this.generating = false;
+                                    this.generating--;
+                                    if (this.generating) {
+                                        setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+                                    } else {
+                                        setPresence('');
+                                    }
                                     })
                     .catch(console.error);
             });
@@ -128,16 +153,17 @@ Tomato, and when you have none left you feel horrible. You feel like the devil l
 I don't have any radishes 😫
 `;
             message.delete();
-            if (this.generating) {
+            if (this.generating >= this.MaxGenerators) {
                 this.webhooks.get(message.guild, message.channel)
                     .then(webhook => webhook.edit("A New Radish", "https://i.imgur.com/BuLE1VA.png"))
-                    .then(webhook => {webhook.sendMessage("**HEY! I'm generating here!**");
+                    .then(webhook => {webhook.sendMessage("I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.");
                                     webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
                                     })
                     .catch(console.error);
                 return;
             }
-            this.generating = true;
+            this.generating++;
+            setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
             const defaults = {
                 cwd: __dirname  + '/gpt2bot',
                 env: process.env
@@ -155,7 +181,12 @@ I don't have any radishes 😫
                         console.log("\n" + outMsg + "\n");
                         webhook.sendMessage(postPrompt);
                                     webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
-                                    this.generating = false;
+                                    this.generating--;
+                                    if (this.generating) {
+                                        setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+                                    } else {
+                                        setPresence('');
+                                    }
                                     })
                     .catch(console.error);
             });
