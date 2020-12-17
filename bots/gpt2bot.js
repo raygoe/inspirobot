@@ -125,13 +125,14 @@ In my garage... "Never be part of my office any more, ever again." - My Boss
 I had no radishes... Jesus Christ, the Son of God, crawled out of my airduct to show off his new Nike sneakers. I was just so miserable, all I could do was stuff him back up my airduct.
 Type of jewel that tastes like a salad.
 Tomato, and when you have none left you feel horrible. You feel like the devil lives in your laundry room.
-I don't have any radishes 😫`;
+I don't have any radishes 😫
+`;
             message.delete();
             if (this.generating) {
                 this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit("A New Radish", "https://i.imgur.com/wcl2P5f.png"))
+                    .then(webhook => webhook.edit("A New Radish", "https://i.imgur.com/BuLE1VA.png"))
                     .then(webhook => {webhook.sendMessage("**HEY! I'm generating here!**");
-                                    webhook.edit(message.channel.name, "https://i.imgur.com/wcl2P5f.png");
+                                    webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
                                     })
                     .catch(console.error);
                 return;
@@ -141,19 +142,19 @@ I don't have any radishes 😫`;
                 cwd: __dirname  + '/gpt2bot',
                 env: process.env
             };
-            const gpt2tc = spawn(__dirname  + '/gpt2bot/gpt2tc', ['-T', '8', '-m', '1558M', 'g', prompt], defaults);
+            const gpt2tc = spawn(__dirname  + '/gpt2bot/gpt2tc', ['-T', '8', '-m', '345M', 'g', prompt], defaults);
             let outMsg = "";
             gpt2tc.stdout.on('data', (data) => { outMsg += data; });
             gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
             gpt2tc.on('close', (code) => {
                 this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit("A New Radish", "https://i.imgur.com/wcl2P5f.png"))
+                    .then(webhook => webhook.edit("A New Radish", "https://i.imgur.com/BuLE1VA.png"))
                     .then(webhook => {
-                        let postPrompt = outMsg.substr(prompt.length + 1);
+                        let postPrompt = outMsg.substr(prompt.length);
                         postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
                         console.log("\n" + outMsg + "\n");
-                        webhook.sendMessage($postPrompt);
-                                    webhook.edit(message.channel.name, "https://i.imgur.com/wcl2P5f.png");
+                        webhook.sendMessage(postPrompt);
+                                    webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
                                     this.generating = false;
                                     })
                     .catch(console.error);
