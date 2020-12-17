@@ -38,7 +38,7 @@ module.exports = class GPT2Bot {
                 return;
             }
             this.generating++;
-            setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+            this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
             const defaults = {
                 cwd: __dirname  + '/gpt2bot',
                 env: process.env
@@ -57,9 +57,9 @@ module.exports = class GPT2Bot {
                                     webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
                                     this.generating--;
                                     if (this.generating) {
-                                        setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+                                        this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
                                     } else {
-                                        setPresence('');
+                                        this.setPresence('');
                                     }
                                     })
                     .catch(console.error);
@@ -100,7 +100,7 @@ Q: ${question}`;
                 return;
             }
             this.generating++;
-            setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+            this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
             const defaults = {
                 cwd: __dirname  + '/gpt2bot',
                 env: process.env
@@ -122,9 +122,9 @@ ${postPrompt}`);
                                     webhook.edit(message.channel.name, "https://i.imgur.com/wcl2P5f.png");
                                     this.generating--;
                                     if (this.generating) {
-                                        setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+                                        this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
                                     } else {
-                                        setPresence('');
+                                        this.setPresence('');
                                     }
                                     })
                     .catch(console.error);
@@ -163,7 +163,7 @@ I don't have any radishes 😫
                 return;
             }
             this.generating++;
-            setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+            this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
             const defaults = {
                 cwd: __dirname  + '/gpt2bot',
                 env: process.env
@@ -183,9 +183,9 @@ I don't have any radishes 😫
                                     webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
                                     this.generating--;
                                     if (this.generating) {
-                                        setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+                                        this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
                                     } else {
-                                        setPresence('');
+                                        this.setPresence('');
                                     }
                                     })
                     .catch(console.error);

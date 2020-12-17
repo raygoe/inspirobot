@@ -18,7 +18,7 @@ let radishbot = new radishBot(webhooks);
 let inspirobot = new inspiroBot(webhooks);
 let apocalypsebot = new apocalypseBot(webhooks);
 let furrybot = new furryBot(webhooks);
-let gpt2bot = new gpt2Bot(webhooks);
+let gpt2bot = new gpt2Bot(webhooks, client);
 
 client.on('ready', () => {
     console.log('Connected to Discord API... :o');
