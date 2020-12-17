@@ -13,6 +13,7 @@ module.exports = class GPT2Bot {
         
         // Execute on :sorry_bone_bag:
         if (message.content.substr(0, 6) == "/gpt2 ") {
+            let authorId = message.author.id;
             message.delete();
             if (this.generating) {
                 this.webhooks.get(message.guild, message.channel)
@@ -36,7 +37,9 @@ module.exports = class GPT2Bot {
             gpt2tc.on('close', (code) => {
                 this.webhooks.get(message.guild, message.channel)
                     .then(webhook => webhook.edit("RadishGod", "https://i.imgur.com/BuLE1VA.png"))
-                    .then(webhook => {webhook.sendMessage(`>>> **${prompt}**${outMsg.substr(prompt.length, outMsg.search("\ntime=") - prompt.length )}`);
+                    .then(webhook => {webhook.sendMessage(
+`<@!${authorId}>, here's your message:
+>>> **${prompt}**${outMsg.substr(prompt.length, outMsg.search("\ntime=") - prompt.length )}`);
                                     webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
                                     this.generating = false;
                                     })
@@ -49,6 +52,7 @@ module.exports = class GPT2Bot {
 
         if (message.content.substr(0, 5) == "/gov ") {
             let question = message.content.substr(5);
+            let authorId = message.author.id;
             let prompt = 
 `Q: Your citizens are having trouble paying for medical expenses.
 A: Have the government pay and then put pressure on the companies to lower prices.
@@ -93,7 +97,7 @@ Q: ${question}`;
                         postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
                         console.log("\n" + outMsg + "\n");
                         webhook.sendMessage(
-`You asked: **${question}**
+`<@!${authorId}> asked: **${question}**
 ${postPrompt}`);
                                     webhook.edit(message.channel.name, "https://i.imgur.com/wcl2P5f.png");
                                     this.generating = false;
