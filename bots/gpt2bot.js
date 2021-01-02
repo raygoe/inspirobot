@@ -49,11 +49,12 @@ module.exports = class GPT2Bot {
             gpt2tc.stdout.on('data', (data) => { outMsg += data; });
             gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
             gpt2tc.on('close', (code) => {
+		console.log(outMsg);
                 this.webhooks.get(message.guild, message.channel)
                     .then(webhook => webhook.edit({ name: "RadishGod", avatar: "https://i.imgur.com/BuLE1VA.png"} ))
                     .then(webhook => {webhook.sendMessage(
 `<@!${authorId}>, here's your message:
->>> **${prompt}**${outMsg.substr(prompt.length, outMsg.search("\ntime=") - prompt.length )}`);
+>>> **${prompt}**${outMsg.substr(prompt.length)}`);
                                     webhook.edit({ name: message.channel.name, avatar: "https://i.imgur.com/BuLE1VA.png"} );
                                     this.generating--;
                                     if (this.generating) {
