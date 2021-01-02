@@ -133,9 +133,9 @@ module.exports = class FurryBot {
 
             // Send to the chat
             this.webhooks.get(message.guild, message.channel)
-                .then(webhook => webhook.edit("BolgyBot", "https://i.imgur.com/iJtoCsV.png"))
+                .then(webhook => webhook.edit({ name: "BolgyBot", avatar: "https://i.imgur.com/iJtoCsV.png"} ))
                 .then(webhook => {webhook.sendMessage(output);
-                                webhook.edit(message.channel.name, "https://i.imgur.com/iJtoCsV.png");
+                                webhook.edit({ name: message.channel.name, avatar:  "https://i.imgur.com/iJtoCsV.png"} );
                                 })
                 .catch(console.error);
             

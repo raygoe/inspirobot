@@ -26,9 +26,9 @@ module.exports = class InspiroBot {
                         embed.setColor(0xFFCC00)
                             .setImage(data);
                         this.webhooks.get(message.guild, message.channel)
-                            .then(webhook => webhook.edit("Inspirobot", "https://i.imgur.com/WAAdjoX.png"))
+                            .then(webhook => webhook.edit( {name: "Inspirobot", avatar: "https://i.imgur.com/WAAdjoX.png"} ))
                             .then(webhook => {webhook.sendMessage("", {"embeds": [embed]});
-                                            webhook.edit(message.channel.name, "https://i.imgur.com/WAAdjoX.png");
+                                            webhook.edit( {name: message.channel.name, avatar: "https://i.imgur.com/WAAdjoX.png"} );
                                             })
                             .catch(console.error);
                         // Return true if we did something

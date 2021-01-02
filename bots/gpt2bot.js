@@ -30,9 +30,9 @@ module.exports = class GPT2Bot {
             message.delete();
             if (this.generating >= this.MaxGenerators) {
                 this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit("RadishGod", "https://i.imgur.com/BuLE1VA.png"))
+                    .then(webhook => webhook.edit({ name: "RadishGod", avatar: "https://i.imgur.com/BuLE1VA.png"} ))
                     .then(webhook => {webhook.sendMessage("**I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.**");
-                                    webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
+                                    webhook.edit({ name: message.channel.name, avatar:  "https://i.imgur.com/BuLE1VA.png"} );
                                     })
                     .catch(console.error);
                 return;
@@ -50,11 +50,11 @@ module.exports = class GPT2Bot {
             gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
             gpt2tc.on('close', (code) => {
                 this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit("RadishGod", "https://i.imgur.com/BuLE1VA.png"))
+                    .then(webhook => webhook.edit({ name: "RadishGod", avatar: "https://i.imgur.com/BuLE1VA.png"} ))
                     .then(webhook => {webhook.sendMessage(
 `<@!${authorId}>, here's your message:
 >>> **${prompt}**${outMsg.substr(prompt.length, outMsg.search("\ntime=") - prompt.length )}`);
-                                    webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
+                                    webhook.edit({ name: message.channel.name, avatar: "https://i.imgur.com/BuLE1VA.png"} );
                                     this.generating--;
                                     if (this.generating) {
                                         this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
@@ -92,9 +92,9 @@ Q: ${question}`;
             message.delete();
             if (this.generating >= this.MaxGenerators) {
                 this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit("Our AI Overlord", "https://i.imgur.com/wcl2P5f.png"))
+                    .then(webhook => webhook.edit({name: "Our AI Overlord", avatar: "https://i.imgur.com/wcl2P5f.png"} ))
                     .then(webhook => {webhook.sendMessage("I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.");
-                                    webhook.edit(message.channel.name, "https://i.imgur.com/wcl2P5f.png");
+                                    webhook.edit({name: message.channel.name, avatar: "https://i.imgur.com/wcl2P5f.png"} );
                                     })
                     .catch(console.error);
                 return;
@@ -111,7 +111,7 @@ Q: ${question}`;
             gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
             gpt2tc.on('close', (code) => {
                 this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit("Our AI Overlord", "https://i.imgur.com/wcl2P5f.png"))
+                    .then(webhook => webhook.edit({name: "Our AI Overlord", avatar: "https://i.imgur.com/wcl2P5f.png"} ))
                     .then(webhook => {
                         let postPrompt = outMsg.substr(prompt.length + 1);
                         postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
@@ -119,7 +119,7 @@ Q: ${question}`;
                         webhook.sendMessage(
 `<@!${authorId}> asked: **${question}**
 ${postPrompt}`);
-                                    webhook.edit(message.channel.name, "https://i.imgur.com/wcl2P5f.png");
+                                    webhook.edit({name: message.channel.name, avatar: "https://i.imgur.com/wcl2P5f.png"} );
                                     this.generating--;
                                     if (this.generating) {
                                         this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
@@ -155,9 +155,9 @@ I don't have any radishes 😫
             message.delete();
             if (this.generating >= this.MaxGenerators) {
                 this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit("A New Radish", "https://i.imgur.com/BuLE1VA.png"))
+                    .then(webhook => webhook.edit({ name: "A New Radish", avatar: "https://i.imgur.com/BuLE1VA.png"} ))
                     .then(webhook => {webhook.sendMessage("I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.");
-                                    webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
+                                    webhook.edit({ name: message.channel.name, avatar: "https://i.imgur.com/BuLE1VA.png"} );
                                     })
                     .catch(console.error);
                 return;
@@ -174,13 +174,13 @@ I don't have any radishes 😫
             gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
             gpt2tc.on('close', (code) => {
                 this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit("A New Radish", "https://i.imgur.com/BuLE1VA.png"))
+                    .then(webhook => webhook.edit({name: "A New Radish", avatar: "https://i.imgur.com/BuLE1VA.png"} ))
                     .then(webhook => {
                         let postPrompt = outMsg.substr(prompt.length);
                         postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
                         console.log("\n" + outMsg + "\n");
                         webhook.sendMessage(postPrompt);
-                                    webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
+                                    webhook.edit({name: message.channel.name, avatar: "https://i.imgur.com/BuLE1VA.png"} );
                                     this.generating--;
                                     if (this.generating) {
                                         this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);

@@ -133,9 +133,9 @@ module.exports = class ApocalypseBot {
 
             // Send to the chat
             this.webhooks.get(message.guild, message.channel)
-                .then(webhook => webhook.edit("Oblivion Bot", "http://media.moddb.com/images/downloads/1/128/127877/1282103597986.jpg"))
+                .then(webhook => webhook.edit({name: "Oblivion Bot", avatar: "http://media.moddb.com/images/downloads/1/128/127877/1282103597986.jpg"} ))
                 .then(webhook => {webhook.sendMessage(output);
-                                webhook.edit(message.channel.name, "http://media.moddb.com/images/downloads/1/128/127877/1282103597986.jpg");
+                                webhook.edit({name: message.channel.name, avatar: "http://media.moddb.com/images/downloads/1/128/127877/1282103597986.jpg"} );
                                 })
                 .catch(console.error);
             

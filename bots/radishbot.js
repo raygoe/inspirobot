@@ -29,9 +29,9 @@ module.exports = class RadishBot {
         if (message.content.includes(":sorry_bone_bag:")) {
             let id = Math.floor(Math.random() * this.radish_msg.length);
             this.webhooks.get(message.guild, message.channel)
-                .then(webhook => webhook.edit(this.radish_msg[id].header, "https://i.imgur.com/BuLE1VA.png"))
+                .then(webhook => webhook.edit( {name: this.radish_msg[id].header, avatar: "https://i.imgur.com/BuLE1VA.png"} ))
                 .then(webhook => {webhook.sendMessage(this.radish_msg[id].message);
-                                webhook.edit(message.channel.name, "https://i.imgur.com/BuLE1VA.png");
+                                webhook.edit( {name: message.channel.name, avatar: "https://i.imgur.com/BuLE1VA.png"} );
                                 })
                 .catch(console.error);
 
