@@ -195,6 +195,87 @@ I don't have any radishes 😫
             return true;
         }
 
+        // The Kial QPrediction Bot.
+        // Note that the following statements don't reflect the opinion of the author
+        // and their veracity is definitely in serious doubt.
+        
+        if (message.content.includes(":qpredicts:")) {
+            let authorId = message.author.id;
+            let prompt = 
+`Gamer gate is just to inject social justice into the gaming market.
+The dems are going to go with Hillery then Bernie, because she is a women and not hte fact that only Bernie could beat Trump.
+Brexit would be voted yes.
+EU would make it so other members cannot leave.
+EU needed Britain to be their financial backbone.
+France would within 10 years become authoritarian or completely museum under sharia law.
+Majar demarcate areas teaching social justice to students will completely indoctrinate students into ating America. within
+Demarcates starting under Obama using Identity politics to start a race war and dived the country.
+There would be riots in the streets if trump won.
+dead people will vote and seem to only support Blue.
+If there was not alot to no election tampering trump would win, and the Demarcates wouldn't understand how.
+The Russia Interference was fake. 3000 ads on facebook isn't mass Russia interference I've had more views on my rockstar views than Russia had ads
+The country would be fine if Trump won other than in democrat run citys where they have the legal right to have no interference from Trump and will still fuck up and blame Trump.
+The people that uphold law and order to keep the piece in our country will be given less power by Demarcate run areas so they cannot do their job or arrest the city leaders if needed.
+Trump tariffs on china will be largely ineffective as everything made in china will soon be mind in china finished in veitnam or something with no tariff.
+China will expand into a larger super power to maintain their economy.
+Antifa will only be found in Demarcate run areas.
+Antifa will be seen as a terrorist organization.
+China will take over moreAntifa and Black lives matter will turn Minorities to the trump camp as these people don't want 20 something white fruitcakes talking on their behalf as they have their own voice and don't need to be told they don't.
+The left will try ot impeach Trump based on a lie, and win his case because it was basted on a lie.
+Big tech will take the left side as indicated by public data of them dominating huge sums to the Demarcate party and lobbyists.
+The EU will keep letting immigrants into their countries even though the Wars and Isis cells are dieing.
+Trump will be called names if he stops flights from china.
+lock downs will happen in all states but in mostly Blue states they will never come out of lock down.
+the Dems will pick Biden over Bernie.
+BLM will shout that there voice and message is never heard as every company plasters we support BLM logos on everything they can and donates millions, riots are the voice of the unheard even if every major corporation including Google is sharing it so it is and was heard by almost everyone on this planet.
+BLM roits will only continue in Demarcate run areas
+The people fleeing from the locked down and crumbling demarcate run city's of California will go red states of Nevada, Arizona, and Texas and vote Blue becuase definition of insanity and that will effect the numbers in those states.
+Demarcate run city's will remain on fire until, the election is over where if trump wins they will stay on fire and they will keep refusing Trump to fix it, or Biden wins where the police will finally be told to come in and do their jobs as the rioters has played their only purpose
+there will not be riots in the street because of media calling it for Biden
+Real legal Documents and infestations will be filed and done as accordance to the law into Voter irregularities and not a RUSSIA DID IT. with no real proof or legal doc's filed.
+`;
+            message.delete();
+            if (this.generating >= this.MaxGenerators) {
+                this.webhooks.get(message.guild, message.channel)
+                    .then(webhook => webhook.edit({ name: "The Next Kial Tweet", avatar: "https://i.imgur.com/xEzfVe1.jpg"} ))
+                    .then(webhook => {webhook.sendMessage("I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.");
+                                    webhook.edit({ name: message.channel.name, avatar: "https://i.imgur.com/xEzfVe1.jpg"} );
+                                    })
+                    .catch(console.error);
+                return;
+            }
+            this.generating++;
+            this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+            const defaults = {
+                cwd: __dirname  + '/gpt2bot',
+                env: process.env
+            };
+            const gpt2tc = spawn(__dirname  + '/gpt2bot/gpt2tc', ['-T', '8', '-m', '345M', 'g', prompt], defaults);
+            let outMsg = "";
+            gpt2tc.stdout.on('data', (data) => { outMsg += data; });
+            gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
+            gpt2tc.on('close', (code) => {
+                this.webhooks.get(message.guild, message.channel)
+                    .then(webhook => webhook.edit({name: "The Next Kial Tweet", avatar: "https://i.imgur.com/xEzfVe1.jpg"} ))
+                    .then(webhook => {
+                        let postPrompt = outMsg.substr(prompt.length);
+                        postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
+                        console.log("\n" + outMsg + "\n");
+                        webhook.sendMessage(postPrompt);
+                                    webhook.edit({name: message.channel.name, avatar: "https://i.imgur.com/xEzfVe1.jpg"} );
+                                    this.generating--;
+                                    if (this.generating) {
+                                        this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+                                    } else {
+                                        this.setPresence('');
+                                    }
+                                    })
+                    .catch(console.error);
+            });
+            
+            return true;
+        }
+
         // Return false if we did nothing
         return false;
     }
