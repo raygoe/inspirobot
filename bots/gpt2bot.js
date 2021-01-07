@@ -237,7 +237,7 @@ Real legal Documents and infestations will be filed and done as accordance to th
             message.delete();
             if (this.generating >= this.MaxGenerators) {
                 this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit({ name: "The Next Kial Tweet", avatar: "https://i.imgur.com/xEzfVe1.jpg"} ))
+                    .then(webhook => webhook.edit({ name: "The Next Kial Prediction Tweet", avatar: "https://i.imgur.com/xEzfVe1.jpg"} ))
                     .then(webhook => {webhook.sendMessage("I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.");
                                     webhook.edit({ name: message.channel.name, avatar: "https://i.imgur.com/xEzfVe1.jpg"} );
                                     })
@@ -250,13 +250,13 @@ Real legal Documents and infestations will be filed and done as accordance to th
                 cwd: __dirname  + '/gpt2bot',
                 env: process.env
             };
-            const gpt2tc = spawn(__dirname  + '/gpt2bot/gpt2tc', ['-T', '8', '-m', '345M', 'g', prompt], defaults);
+            const gpt2tc = spawn(__dirname  + '/gpt2bot/gpt2tc', ['-T', '8', '-m', '1558M', 'g', prompt], defaults);
             let outMsg = "";
             gpt2tc.stdout.on('data', (data) => { outMsg += data; });
             gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
             gpt2tc.on('close', (code) => {
                 this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit({name: "The Next Kial Tweet", avatar: "https://i.imgur.com/xEzfVe1.jpg"} ))
+                    .then(webhook => webhook.edit({name: "The Next Kial Prediction Tweet", avatar: "https://i.imgur.com/xEzfVe1.jpg"} ))
                     .then(webhook => {
                         let postPrompt = outMsg.substr(prompt.length);
                         postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
