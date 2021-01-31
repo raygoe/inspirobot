@@ -114,6 +114,48 @@ ${postPrompt}`;
             return true;
         }
 
+        // What if
+        if (message.content.substr(0, 5) == "/what") {
+            let authorId = message.author.id;
+            let prompt = 
+`What if gas lamps had been invented a hundred years earlier?
+What if Nero was directly responsible for the advent of color television?
+What if John Adams was inspired by Ghengis Khan?
+What if Queen Victoria was a gladiator?
+What if the fall of the Aztec Empire had never happened?
+What if the most advanced technology of today was sailing ships?`;
+            message.delete();
+            if (this.generating >= this.MaxGenerators) {
+                message.channel.send("**I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.**");
+                return;
+            }
+            this.generating++;
+            this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+            const defaults = {
+                cwd: __dirname  + '/gpt2bot',
+                env: process.env
+            };
+            const gpt2tc = spawn(__dirname  + '/gpt2bot/gpt2tc', ['-T', '8', '-m', '1558M', 'g', prompt], defaults);
+            let outMsg = "";
+            gpt2tc.stdout.on('data', (data) => { outMsg += data; });
+            gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
+            gpt2tc.on('close', (code) => {
+                let postPrompt = outMsg.substr(prompt.length + 1);
+                postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
+                let pendingMessage =
+`> ${postPrompt}`;
+                message.channel.send(pendingMessage.substr(0, 2000));
+                this.generating--;
+                if (this.generating) {
+                    this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+                } else {
+                    this.setPresence('');
+                }
+            });
+
+            return true;
+        }
+
 
         // New Radish.
         if (message.content.includes(":radish:")) {
