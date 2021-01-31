@@ -124,7 +124,7 @@ ${postPrompt}`;
 > What if Queen Victoria was a gladiator?
 > What if the fall of the Aztec Empire had never happened?
 > What if the most advanced technology of today was sailing ships?
-> `;
+> What if `;
             message.delete();
             if (this.generating >= this.MaxGenerators) {
                 message.channel.send("**I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.**");
@@ -143,7 +143,7 @@ ${postPrompt}`;
             gpt2tc.on('close', (code) => {
                 let postPrompt = outMsg.substr(prompt.length);
                 postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
-                let pendingMessage = `> ${postPrompt}`;
+                let pendingMessage = `> What if ${postPrompt}`;
                 message.channel.send(pendingMessage.substr(0, 2000));
                 this.generating--;
                 if (this.generating) {
