@@ -97,6 +97,8 @@ Q: ${question}`;
             gpt2tc.stdout.on('data', (data) => { outMsg += data; });
             gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
             gpt2tc.on('close', (code) => {
+                let postPrompt = outMsg.substr(prompt.length + 1);
+                postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
                 let pendingMessage =
 `<@!${authorId}> asked: **${question}**
 ${postPrompt}`;
