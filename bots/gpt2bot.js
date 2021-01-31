@@ -28,7 +28,7 @@ module.exports = class GPT2Bot {
         if (message.content.substr(0, 6) == "/gpt2 ") {
             let authorId = message.author.id;
             message.delete();
-            if (this.generating >= this.MaxGenerators) {
+            /*if (this.generating >= this.MaxGenerators) {
                 this.webhooks.get(message.guild, message.channel)
                     .then(webhook => webhook.edit({ name: "RadishGod", avatar: "https://i.imgur.com/BuLE1VA.png"} ))
                     .then(webhook => {webhook.sendMessage("**I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.**");
@@ -36,7 +36,7 @@ module.exports = class GPT2Bot {
                                     })
                     .catch(console.error);
                 return;
-            }
+            }*/
             this.generating++;
             this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
             const defaults = {
@@ -49,7 +49,12 @@ module.exports = class GPT2Bot {
             gpt2tc.stdout.on('data', (data) => { outMsg += data; });
             gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
             gpt2tc.on('close', (code) => {
-		console.log(outMsg);
+        console.log(outMsg);
+        let pendingMessage =
+`<@!${authorId}>, here's your message:
+>>> **${prompt}**${outMsg.substr(prompt.length)}`;
+        message.channel.send(pendingMessage.substr(0, 2000));
+/*
                 this.webhooks.get(message.guild, message.channel)
                     .then(webhook => webhook.edit({ name: "RadishGod", avatar: "https://i.imgur.com/BuLE1VA.png"} ))
                     .then(webhook => {
@@ -66,6 +71,7 @@ module.exports = class GPT2Bot {
                                     }
                                     })
                     .catch(console.error);
+*/
             });
 
             // Return true on success
