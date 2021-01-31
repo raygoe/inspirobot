@@ -143,8 +143,7 @@ What if the most advanced technology of today was sailing ships?`;
             gpt2tc.on('close', (code) => {
                 console.log(outMsg);
                 let postPrompt = outMsg.substr(prompt.length + 1);
-                postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
-                let pendingMessage = `> ${postPrompt}`;
+                let pendingMessage = `>>> ${postPrompt}`;
                 message.channel.send(pendingMessage.substr(0, 2000));
                 this.generating--;
                 if (this.generating) {
