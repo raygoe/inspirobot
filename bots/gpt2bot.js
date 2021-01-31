@@ -141,6 +141,7 @@ ${postPrompt}`;
             gpt2tc.stdout.on('data', (data) => { outMsg += data; });
             gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
             gpt2tc.on('close', (code) => {
+                console.log(outMsg);
                 let postPrompt = outMsg.substr(prompt.length);
                 postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
                 let pendingMessage = `> What if ${postPrompt}`;
