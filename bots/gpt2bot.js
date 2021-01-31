@@ -52,9 +52,11 @@ module.exports = class GPT2Bot {
 		console.log(outMsg);
                 this.webhooks.get(message.guild, message.channel)
                     .then(webhook => webhook.edit({ name: "RadishGod", avatar: "https://i.imgur.com/BuLE1VA.png"} ))
-                    .then(webhook => {webhook.sendMessage(
+                    .then(webhook => {
+                        let pendingMessage =
 `<@!${authorId}>, here's your message:
->>> **${prompt}**${outMsg.substr(prompt.length)}`);
+>>> **${prompt}**${outMsg.substr(prompt.length)}`;
+                                    webhook.sendMessage(pendingMessage.substr(2000));
                                     webhook.edit({ name: message.channel.name, avatar: "https://i.imgur.com/BuLE1VA.png"} );
                                     this.generating--;
                                     if (this.generating) {
