@@ -28,15 +28,10 @@ module.exports = class GPT2Bot {
         if (message.content.substr(0, 6) == "/gpt2 ") {
             let authorId = message.author.id;
             message.delete();
-            /*if (this.generating >= this.MaxGenerators) {
-                this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit({ name: "RadishGod", avatar: "https://i.imgur.com/BuLE1VA.png"} ))
-                    .then(webhook => {webhook.sendMessage("**I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.**");
-                                    webhook.edit({ name: message.channel.name, avatar:  "https://i.imgur.com/BuLE1VA.png"} );
-                                    })
-                    .catch(console.error);
+            if (this.generating >= this.MaxGenerators) {
+                message.channel.send("**I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.**");
                 return;
-            }*/
+            }
             this.generating++;
             this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
             const defaults = {
@@ -54,24 +49,12 @@ module.exports = class GPT2Bot {
 `<@!${authorId}>, here's your message:
 >>> **${prompt}**${outMsg.substr(prompt.length)}`;
         message.channel.send(pendingMessage.substr(0, 2000));
-/*
-                this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit({ name: "RadishGod", avatar: "https://i.imgur.com/BuLE1VA.png"} ))
-                    .then(webhook => {
-                        let pendingMessage =
-`<@!${authorId}>, here's your message:
->>> **${prompt}**${outMsg.substr(prompt.length)}`;
-                                    webhook.sendMessage(pendingMessage.substr(0, 2000));
-                                    webhook.edit({ name: message.channel.name, avatar: "https://i.imgur.com/BuLE1VA.png"} );
-                                    this.generating--;
-                                    if (this.generating) {
-                                        this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
-                                    } else {
-                                        this.setPresence('');
-                                    }
-                                    })
-                    .catch(console.error);
-*/
+        this.generating--;
+        if (this.generating) {
+            this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+        } else {
+            this.setPresence('');
+        }
             });
 
             // Return true on success
@@ -100,12 +83,7 @@ A: Wear a mask and take the vaccine when it comes.
 Q: ${question}`;
             message.delete();
             if (this.generating >= this.MaxGenerators) {
-                this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit({name: "Our AI Overlord", avatar: "https://i.imgur.com/wcl2P5f.png"} ))
-                    .then(webhook => {webhook.sendMessage("I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.");
-                                    webhook.edit({name: message.channel.name, avatar: "https://i.imgur.com/wcl2P5f.png"} );
-                                    })
-                    .catch(console.error);
+                message.channel.send("**I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.**");
                 return;
             }
             this.generating++;
@@ -119,24 +97,16 @@ Q: ${question}`;
             gpt2tc.stdout.on('data', (data) => { outMsg += data; });
             gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
             gpt2tc.on('close', (code) => {
-                this.webhooks.get(message.guild, message.channel)
-                    .then(webhook => webhook.edit({name: "Our AI Overlord", avatar: "https://i.imgur.com/wcl2P5f.png"} ))
-                    .then(webhook => {
-                        let postPrompt = outMsg.substr(prompt.length + 1);
-                        postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
-                        console.log("\n" + outMsg + "\n");
-                        webhook.sendMessage(
+                let pendingMessage =
 `<@!${authorId}> asked: **${question}**
-${postPrompt}`);
-                                    webhook.edit({name: message.channel.name, avatar: "https://i.imgur.com/wcl2P5f.png"} );
-                                    this.generating--;
-                                    if (this.generating) {
-                                        this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
-                                    } else {
-                                        this.setPresence('');
-                                    }
-                                    })
-                    .catch(console.error);
+${postPrompt}`;
+                message.channel.send(pendingMessage.substr(0, 2000));
+                this.generating--;
+                if (this.generating) {
+                    this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
+                } else {
+                    this.setPresence('');
+                }
             });
 
             return true;
@@ -190,12 +160,7 @@ I don't have any radishes 😫
                         console.log("\n" + outMsg + "\n");
                         webhook.sendMessage(postPrompt);
                                     webhook.edit({name: message.channel.name, avatar: "https://i.imgur.com/BuLE1VA.png"} );
-                                    this.generating--;
-                                    if (this.generating) {
-                                        this.setPresence(`Thinking (${this.generating}/${this.MaxGenerators})`);
-                                    } else {
-                                        this.setPresence('');
-                                    }
+                                    
                                     })
                     .catch(console.error);
             });
