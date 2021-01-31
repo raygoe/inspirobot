@@ -118,13 +118,13 @@ ${postPrompt}`;
         if (message.content.substr(0, 5) == "/what") {
             let authorId = message.author.id;
             let prompt = 
-`> What if gas lamps had been invented a hundred years earlier?
-> What if Nero was directly responsible for the advent of color television?
-> What if John Adams was inspired by Ghengis Khan?
-> What if Queen Victoria was a gladiator?
-> What if the fall of the Aztec Empire had never happened?
-> What if the most advanced technology of today was sailing ships?
-> What if `;
+`Best what-if prompts:
+What if gas lamps had been invented a hundred years earlier?
+What if Nero was directly responsible for the advent of color television?
+What if John Adams was inspired by Ghengis Khan?
+What if Queen Victoria was a gladiator?
+What if the fall of the Aztec Empire had never happened?
+What if the most advanced technology of today was sailing ships?`;
             message.delete();
             if (this.generating >= this.MaxGenerators) {
                 message.channel.send("**I DON'T HAVE ENOUGH RAM TO THINK THIS HARD.**");
@@ -142,9 +142,9 @@ ${postPrompt}`;
             gpt2tc.stderr.on('data', (data) => { console.error(`gpt2tc returned: ${data}`); })
             gpt2tc.on('close', (code) => {
                 console.log(outMsg);
-                let postPrompt = outMsg.substr(prompt.length);
+                let postPrompt = outMsg.substr(prompt.length + 1);
                 postPrompt = postPrompt.substr(0, postPrompt.search("\n"));
-                let pendingMessage = `> What if ${postPrompt}`;
+                let pendingMessage = `> ${postPrompt}`;
                 message.channel.send(pendingMessage.substr(0, 2000));
                 this.generating--;
                 if (this.generating) {
