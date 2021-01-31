@@ -56,7 +56,7 @@ module.exports = class GPT2Bot {
                         let pendingMessage =
 `<@!${authorId}>, here's your message:
 >>> **${prompt}**${outMsg.substr(prompt.length)}`;
-                                    webhook.sendMessage(pendingMessage.substr(2000));
+                                    webhook.sendMessage(pendingMessage.substr(0, 2000));
                                     webhook.edit({ name: message.channel.name, avatar: "https://i.imgur.com/BuLE1VA.png"} );
                                     this.generating--;
                                     if (this.generating) {
